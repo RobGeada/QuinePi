@@ -153,4 +153,7 @@ def estimate(radius):
 
 if __name__ == '__main__':
 	desiredRad = int(sys.argv[1])
+	if desiredRad < 14:
+		print "Sorry! I haven't been able to make them that small yet!"
+		sys.exit()
 	estimate(desiredRad)
