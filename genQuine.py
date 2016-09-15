@@ -133,7 +133,7 @@ def getLine(length):
 
 #======GENERATE QUINE CIRCLE PROGRAM FROM ABOVE LINES====
 def makeCircle(radius):
-	f=open("generatedQuine.py","w")
+	f=open("piQuine.py","w")
 
 	#iterate through circle
 	for y_pos in range(-radius,radius+1):
@@ -164,7 +164,7 @@ def makeCircle(radius):
 #=======PROGRAM MAIN FUNCTION=============================
 def estimate(radius):
 	makeCircle(radius)
-	import generatedQuine
+	import piQuine
 
 #======INTERPRET COMMAND LINE ARGS========================
 if __name__ == '__main__':
