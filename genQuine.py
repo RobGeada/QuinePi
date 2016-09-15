@@ -5,7 +5,7 @@ import sys
 #these must appear in this order
 order = [
 r"co='from math ';",
-r"exec('import os  ');",
+r"exec('import os');",
 r"exec(co+'import sqrt ');",
 r"w='me=';"
 r"x='os.path.';",
