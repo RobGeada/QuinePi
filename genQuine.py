@@ -1,49 +1,42 @@
 import random as rnd
-import sys
+import sys,os
 
 #===========DEFINE ALL THE NECCESARY COMMANDS============
 #these must appear in this order
 order = [
-r"co='from math ';",
-r"exec('import os');",
-r"exec(co+'import sqrt ');",
-r"w='me=';"
-r"x='os.path.';",
-r"y='realpath';",
-r"z='(__file__)';",
-r"exec(w+x+y+z);",
-r"f=open(me);",
+r"I='import';",
+r"M='from math ';",
+r"exec(I+' os');",
+r"exec(M+I+' sqrt');",
+r"x='M=os.path.realp';",
+r"y='ath(__file__)';",
+r"exec(x+y);",
+r"f=open(M);",
 r"s=f.read();"]
 
 #these can be interspersed in 'order' in any order
 anys = [\
-r'spa=0.0;',
-r'i=0;',
-r'fll=0.0;',
-r"o='Pi~%f';",
-r"a='while(i<len(s)):\n\t';",
-r"newL='\n';",
-"b='if(s[i]==\\'\"\\' ';",
-r"c='or s[i]==newL):';",
-r"d='elif(s[i]==\'|\'):';",
-r"e='spa+=1\n\t';",
-r"f='else:fll+=1\n\t';",
-r"g='i+=1';",
-r"h='pass\n\t';"]
+r'S=-1.;',
+r'F=2;',
+r"o='%f';",
+r"a='for i in s:\n ';",
+r"N='\n';",
+"b='if(i==\\'\"\\' ';",
+r"c='or i==N):pass\n ';",
+r"e='elif(i==\'|\'):';",
+r"f='S+=1\n else:F+=1';"
+]
 
 #these must appear in this order, after everything above
 lasts = [\
-"d1=a+b+c+h;",
-"d2=d+e+f+g;",
-"exec(d1+d2);",
-"fll+=2;"
-"spa-=1;",
-"squ=spa+fll;",
-"rad=sqrt(squ/4)-.5;",
-"pi=fll/(rad)**2;",
-"re=o%pi;",
-"print(re);"]
-
+"m=a+b+c+e+f;",
+"exec(m);",
+"Q=S+F;",
+"H=.5;",
+"r=sqrt(Q/4)-H;",
+"p=F/r**2;",
+"r=o%p;",
+"print r;"]
 
 #==========PROGRAM WRITER HELPERS======================
 def nl(f):
@@ -75,25 +68,27 @@ def getLine(length):
 	global order
 	global anys
 	global lasts
+	#print order;print anys;print lasts
 	line = ""
 	if len(anys)>0:
 		#no spaces for initializations
-		if len(order)==0 or length < len(order[0]):	
+		if len(order)==0 or length < len(order[0]):
 			i = 0
 			#fill with anys 
-			while len(line)<=length and i<len(anys):
+			while len(line)<length and i<len(anys):
 				if len(line)+len(anys[i])+1<=length:
 					line = addTo(line,anys[i])
 					anys.remove(anys[i])
+					i=-1
 				i+=1
 		#just space for one initialization
-		elif length == len(order[0]):
+		elif length-1 == len(order[0]):
 			line = addTo(line,order[0])
 			order = order[1:]
 		#space for initializations + anys
 		else:
 			#fill with as many inits as possible
-			while len(line)<=length and len(order)>0:
+			while len(line)<length and len(order)>0:
 				if len(line)+len(order[0])+1<=length: 
 					line = addTo(line,order[0])
 					order = order[1:]
@@ -107,7 +102,7 @@ def getLine(length):
 					anys.remove(anys[i])
 				i+=1
 	#no anys or inits left
-	else:
+	if len(order)==0 and len(anys)==0:
 		#no space for lasts
 		if len(lasts)==0 or length < len(lasts[0]):
 			pass
@@ -132,7 +127,7 @@ def getLine(length):
 	return line + filler
 
 #======GENERATE QUINE CIRCLE PROGRAM FROM ABOVE LINES====
-def makeCircle(radius):
+def makeCircle(radius,verbose):
 	f=open("quinePi.py","w")
 
 	#iterate through circle
@@ -155,21 +150,28 @@ def makeCircle(radius):
 		
 		#format and write program line
 		toWrite = "{}{}{}".format(seps,program,seps)
-		print toWrite
+		if verbose:
+			print toWrite
 		f.write(toWrite)
 		if y_pos!=radius+1:
 			f.write("\n")
 	f.close()
 
 #=======PROGRAM MAIN FUNCTION=============================
-def estimate(radius):
-	makeCircle(radius)
-	import quinePi
+def estimate(radius,verbose):
+	makeCircle(radius,verbose)
+	os.system("python quinePi.py")
 
 #======INTERPRET COMMAND LINE ARGS========================
 if __name__ == '__main__':
-	desiredRad = int(sys.argv[1])
-	if desiredRad < 14:
+	desiredRad = int(sys.argv[2])
+	verbose = sys.argv[1]
+	if verbose=="-v":
+		verbose = True
+	else:
+		verbose = False
+	if desiredRad < 12:
 		print "Sorry! I haven't been able to make them that small yet!"
 		sys.exit()
-	estimate(desiredRad)
+	estimate(desiredRad,verbose)
+
